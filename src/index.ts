@@ -16,6 +16,11 @@ interface Database<T extends BaseRecord> {
 // Factory
 function createDatabase<T extends BaseRecord>() {
   class InMemoryDatabase implements Database<T> {
+    // Singleton
+    static instance: InMemoryDatabase = new InMemoryDatabase();
+
+    private constructor() {}
+
     private data: Record<string, T> = {};
 
     set(newValue: T): void {
@@ -31,12 +36,11 @@ function createDatabase<T extends BaseRecord>() {
 }
 
 const CarDB = createDatabase<Car>();
-const carDB = new CarDB();
 
-carDB.set({
+CarDB.instance.set({
   id: '1',
   model: 'Ford',
   maxSpeed: 200,
 });
 
-console.log(carDB.get('1'));
+console.log(CarDB.instance.get('1'));
