@@ -1,0 +1,14 @@
+[
+  {
+    "id": "3",
+    "model": "Tesla",
+    "maxSpeed": 300,
+    "brakeDistance": 60
+  },
+  {
+    "id": "4",
+    "model": "Honda",
+    "maxSpeed": 120,
+    "brakeDistance": 40
+  }
+]

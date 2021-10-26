@@ -1,3 +1,5 @@
+import { RecordHandler, loader } from './loader';
+
 // Observer
 type Listener<T> = (ev: T) => void;
 function createObserver<T>(): {
@@ -120,6 +122,14 @@ function createDatabase<T extends BaseRecord>() {
 }
 
 const CarDB = createDatabase<Car>();
+
+class CarDBAdapter implements RecordHandler<Car> {
+  addRecord(record: Car): void {
+    CarDB.instance.set(record);
+  }
+}
+
+loader('./data.json', new CarDBAdapter());
 
 const unsubscribe = CarDB.instance.onAfterSet(({ value }) => {
   console.log('After Set', value);
