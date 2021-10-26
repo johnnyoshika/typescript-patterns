@@ -44,6 +44,8 @@ interface Database<T extends BaseRecord> {
 
   onBeforeSet(listener: Listener<BeforeSetEvent<T>>): () => void;
   onAfterSet(listener: Listener<AfterSetEvent<T>>): () => void;
+
+  visit(visitor: (item: T) => void): void;
 }
 
 // Factory
@@ -82,6 +84,11 @@ function createDatabase<T extends BaseRecord>() {
     onAfterSet(listener: Listener<AfterSetEvent<T>>): () => void {
       return this.afterAddListeners.subscribe(listener);
     }
+
+    // Visitor
+    visit(visitor: (item: T) => void): void {
+      Object.values(this.data).forEach(visitor);
+    }
   }
 
   return InMemoryDatabase;
@@ -118,3 +125,5 @@ CarDB.instance.set({
   model: 'Toyota',
   maxSpeed: 120,
 });
+
+CarDB.instance.visit(car => console.log(car.model));
