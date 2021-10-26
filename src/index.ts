@@ -13,19 +13,26 @@ interface Database<T extends BaseRecord> {
   get(id: string): T | undefined;
 }
 
-class InMemoryDatabase<T extends BaseRecord> implements Database<T> {
-  private data: Record<string, T> = {};
+// Factory
+function createDatabase<T extends BaseRecord>() {
+  class InMemoryDatabase implements Database<T> {
+    private data: Record<string, T> = {};
 
-  set(newValue: T): void {
-    this.data[newValue.id] = newValue;
+    set(newValue: T): void {
+      this.data[newValue.id] = newValue;
+    }
+
+    get(id: string): T | undefined {
+      return this.data[id];
+    }
   }
 
-  get(id: string): T | undefined {
-    return this.data[id];
-  }
+  return InMemoryDatabase;
 }
 
-const carDB = new InMemoryDatabase<Car>();
+const CarDB = createDatabase<Car>();
+const carDB = new CarDB();
+
 carDB.set({
   id: '1',
   model: 'Ford',
