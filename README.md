@@ -1,3 +1,14 @@
+# 6 TypeScript Patterns
+
+- Factory
+- Singleton
+- Observer
+- Visitor
+- Strategy
+- Adapter
+
+https://www.youtube.com/watch?v=JBu2ZTPgiKI
+
 ## Start
 
 ```
